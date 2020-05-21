@@ -24,15 +24,12 @@ class RegistrarUsuarioRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombres' => 'required|string',
-            'identificacion' => 'required|unique:usuario,identificacion',
-            'fecha_nacimiento' => 'required|date',
-            'sexo' => 'required|in:M,F',
-            'email' => 'required|email|unique:usuario,email',
-            'celular' => 'required',
-            'direccion' => 'required|string',
-            'password' => 'required|confirmed',
-            'permiso_correos' => 'required|boolean',
+            'nombre'             => 'nullable|string',
+            'cedula'             => 'nullable|string',
+            'email'              => 'nullable|email',
+            'tipo_usuario'       => 'nullable|numeric',
+            'password'           => 'nullable|string',
+            'telefono'           => 'nullable|string'
         ];
     }
 }

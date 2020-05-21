@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+use App\User;
 
 class ModificarPerfilRequest extends FormRequest
 {
@@ -23,15 +26,21 @@ class ModificarPerfilRequest extends FormRequest
      */
     public function rules()
     {
+        $usuario = User::find($this->input('email'));
         return [
-            'nombres' => 'string',
-            'identificacion' => 'unique:usuario,identificacion',
-            'fecha_nacimiento' => 'date',
-            'sexo' => 'in:M,F',
-            'celular' => 'string',
-            'direccion' => 'string',
-            'clave' => 'confirmed',
-            'permiso_correos' => 'boolean',
+            'nombres'             => 'string',
+            'apellidos'           => 'string',
+            'identificacion'      => [Rule::unique('usuario')->ignore($usuario->email, 'email')],
+            'fecha_nacimiento'    => 'date',
+            'sexo'                => 'in:M,F',
+            'celular'             => 'string',
+            'direccion'           => 'string',
+            'clave'               => 'confirmed',
+            'permiso_correos'     => 'boolean',
+            'pais'                => 'string',
+
+            'avatar'              => 'image',
+            'avatar_url'          => 'url',
         ];
     }
 }

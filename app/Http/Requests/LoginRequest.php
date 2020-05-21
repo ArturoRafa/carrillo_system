@@ -24,8 +24,8 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|exists:usuario,email',
-            'password' => 'required'
+            'cedula'      => 'required|exists:usuario,cedula',
+            'password'   => 'required'
         ];
     }
 }

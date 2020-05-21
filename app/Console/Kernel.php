@@ -13,7 +13,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\EnviarRecordatoioHoraAntes::class
+       /* Commands\EnviarRecordatorioSieteDiasViaje::class,
+        Commands\EnviarRecordatorioTresDiasViaje::class,
+        Commands\EnviarRecordatorioUnDiaViaje::class,
+        Commands\EnviarOfertas::class,*/
     ];
 
     /**
@@ -26,6 +30,12 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+       /* $schedule->command('recordatorio:horainicio')
+            ->everyMinute();*/
+       /* $schedule->command('recordatorio:tres')
+            ->dailyAt('01:00');
+        $schedule->command('recordatorio:uno')
+            ->dailyAt('01:30');*/
     }
 
     /**
