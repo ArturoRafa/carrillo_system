@@ -134,13 +134,13 @@ class UserController extends Controller
                 $date = $carbon->now();
                 $date = $date->format('Y-m-d');
 
-                $factura = Factura();
+                $factura = new Factura();
                 $factura->fecha_facturacion = $date;
                 $factura->cedula_usuario = $usuario->cedula;
                 $factura->total = ($producto->precio_venta*$request->cantidad);
                 $factura->save();
 
-                $detallefactura = DetalleFactura();
+                $detallefactura = new DetalleFactura();
                 $detallefactura->id_producto = $producto->id;
                 $detallefactura->id_factura = $factura->id;
                 $detallefactura->precio = $producto->precio_venta;
