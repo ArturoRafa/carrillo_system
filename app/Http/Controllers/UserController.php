@@ -130,6 +130,7 @@ class UserController extends Controller
                 $cantidad = $producto->cantidad_disponible - $request->cantidad;
                 $producto->update([ 'cantidad_disponible' => $cantidad ]);
 
+                $carbon = new \Carbon\Carbon();
                 $date = $carbon->now();
                 $date = $date->format('Y-m-d');
 
