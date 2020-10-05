@@ -82,18 +82,23 @@ class UserController extends Controller
     $date = $date->format('Y-m-d');
     /*dd( $date);*/
     $total = 0;
+    $total_efectivo = 0;
 
     if( $request->fecha ) {
         $factura = Factura::where('fecha_facturacion',$request->fecha )
         ->where('estado',1)->get();
     
         foreach ($factura as $key ) {
-            $total = $total + $key->total;
+            if($key->num_factura != null)
+                $total = $total + $key->total;
+            else
+                $total_efectivo = $total_efectivo + $key->total;
         }
 
         return response()->json([
         'facturas' => $factura,
-        'total' =>$total 
+        'total' =>$total,
+        'total_efectivo' => $total_efectivo 
         ]);
     } else {
 
@@ -101,12 +106,16 @@ class UserController extends Controller
         ->where('estado',1)->get();
     
         foreach ($factura as $key ) {
-            $total = $total + $key->total;
+            if($key->num_factura != null)
+                $total = $total + $key->total;
+            else
+                $total_efectivo = $total_efectivo + $key->total;
         }
 
         return response()->json([
         'facturas' => $factura,
-        'total' =>$total 
+        'total' =>$total,
+        'total_efectivo' => $total_efectivo  
         ]);
 
     }
