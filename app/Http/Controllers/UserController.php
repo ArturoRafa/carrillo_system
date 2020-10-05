@@ -122,12 +122,30 @@ class UserController extends Controller
     }
 
      public function compraRapida(Request $request){
+        $usuario = JWTAuth::parseToken()->authenticate();
         $producto = Producto::where('codigo_barras',$request->codigo)->first();
 
         if( $producto ) {
             if( $producto->cantidad_disponible >= $request->cantidad ) {
                 $cantidad = $producto->cantidad_disponible - $request->cantidad;
                 $producto->update([ 'cantidad_disponible' => $cantidad ]);
+
+                $date = $carbon->now();
+                $date = $date->format('Y-m-d');
+
+                $factura = Factura();
+                $factura->fecha_facturacion = $date;
+                $factura->cedula_usuario = $usuario->cedula;
+                $factura->total = ($producto->precio_venta*$request->cantidad);
+                $factura->save();
+
+                $detallefactura = DetalleFactura();
+                $detallefactura->id_producto = $producto->id;
+                $detallefactura->id_factura = $factura->id;
+                $detallefactura->precio = $producto->precio_venta;
+                $detallefactura->cantidad = $request->cantidad;
+                $detallefactura->save();
+
 
                 return response()->json([
                     'ok'      => 'Inventario actualizado',
